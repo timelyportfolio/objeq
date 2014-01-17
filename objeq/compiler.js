@@ -61,6 +61,7 @@ function createCompiler(env) {
     tern:     createTernEvaluator
   });
 
+  var groupVars;
   var getExtension = env.getExtension;
   
   return Object.freeze({
@@ -152,7 +153,7 @@ function createCompiler(env) {
         for ( var i = 0, ilen = keys.length; i < ilen; i++ ) {
           var value = obj[keys[i]];
           if ( isArray(value) ) {
-            result = result.concat(createObjectArray(value));
+            result = result.concat(createObjectArray(value,keys[i]));
           }
           else {
             result = processObject(value, result);
@@ -338,7 +339,9 @@ function createCompiler(env) {
   function createGroupStep(groupingNodes) {
     var groups = wrapEvaluatorArray(groupingNodes)
       , glen = groups.length;
-
+    
+    groupVars = groupingNodes.map(function(d){if(d[1][1]) return d[1][1]});
+    
     return groupStep;
 
     function groupStep(data /* , ctx */) {
@@ -386,7 +389,7 @@ function createCompiler(env) {
     return aggregateStep;
 
     function aggregateStep(data, ctx) {
-      var result = createObjectArray(data);
+      var result = createObjectArray(data,null);
 
       for ( var i = 0; i < alen; i++ ) {
         result = extensions[i].call(data, result);
@@ -870,6 +873,19 @@ function createCompiler(env) {
     var result = [];
     for ( var i = array.length; i--; ) {
       result[i] = array[i].obj;
+    }
+    if (groupVars) {
+      if (typeof result === "object"){
+        result.groups = [];
+      } else {
+        result = { "value": result, "groups": [] };
+      }
+      var tempobj = {};
+      groupVars.forEach(function (d) {
+        if(d){
+          result.groups.push(d);
+        }
+      });
     }
     return result;
   }
