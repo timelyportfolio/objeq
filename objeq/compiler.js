@@ -874,19 +874,21 @@ function createCompiler(env) {
     for ( var i = array.length; i--; ) {
       result[i] = array[i].obj;
     }
-    if (groupVars) {
-      if (typeof result === "object"){
-        result.groups = [];
-      } else {
-        result = { "value": result, "groups": [] };
+    if (typeof result[0] === "object") {
+      if (groupVars) {
+        var tempobj = {};
+        tempobj.groups = [];
+        groupVars.forEach(function (d) {
+          if (d) {
+            var groupobj = {};
+            groupobj[d] = result[0][d];
+            tempobj.groups.push(groupobj);
+          }
+        });
+        tempobj.result = result
+        result = tempobj
       }
-      var tempobj = {};
-      groupVars.forEach(function (d) {
-        if(d){
-          result.groups.push(d);
-        }
-      });
-    }
+    };
     return result;
   }
 }
