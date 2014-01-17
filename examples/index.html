@@ -4,10 +4,12 @@
   <script type="text/javascript" src="../objeq/super.js"></script>
   <script type="text/javascript" src="../objeq/util.js"></script>
   <script type="text/javascript" src="../objeq/parser.js"></script>
-  <script type="text/javascript" src="../objeq/objeq.js"></script>
+  <!--<script type="text/javascript" src="../objeq/objeq.js"></script>-->
   <script type="text/javascript" src="../objeq/objeq-parser-junqi.js"></script>
+  <script type="text/javascript" src="../objeq/compiler.js"></script>
+  <script type="text/javascript" src="../objeq/junqi.js"></script>
   <!--<script type="text/javascript" src="../objeq.min.js"></script>-->
-  <script type="text/javascript" src="extensions.js"></script>
+  <!--<script type="text/javascript" src="extensions.js"></script>-->
   <script type="text/javascript" src="beautify.js"></script>
   <script type="text/javascript" src="jquery.min.js"></script>
   <script type="text/javascript">
@@ -15,6 +17,8 @@
       , compiledQuery, sourceJSON;
 
     var $query, $queries, $source, $result, $run, $inputItems, $outputItems;
+
+    var $objeq = createJunqiEnvironment().objeq;
 
     function beautifySource() {
       $source.val(js_beautify($source.val(), {
@@ -25,12 +29,12 @@
 
     function performQuery() {
       try {
-        if ( queryDirty ) {
+        if (queryDirty) {
           compiledQuery = $objeq(query.value);
           queryDirty = false;
         }
 
-        if ( sourceDirty ) {
+        if (sourceDirty) {
           sourceJSON = JSON.parse($source.val());
           $inputItems.html("(" + sourceJSON.length + " items)");
           sourceDirty = false;
@@ -43,11 +47,11 @@
         $outputItems.html("(" + output.length + " items in " + elapsed + "ms)");
 
         $result.val(js_beautify(JSON.stringify(output), {
-            indent_size: 2,
-            preserve_newlines: true
+          indent_size: 2,
+          preserve_newlines: true
         }));
       }
-      catch ( err ) {
+      catch (err) {
         $outputItems.html("(Error!)");
         $result.val(err);
       }
@@ -60,7 +64,7 @@
       performQuery();
     }
 
-    $(window).ready(function() {
+    $(window).ready(function () {
       $query = $('#query');
       $queries = $('#queries');
       $run = $('#run');
@@ -73,10 +77,10 @@
       chooseQuery();
 
       $run.click(performQuery);
-      $query.change(function() {
+      $query.change(function () {
         queryDirty = true;
       });
-      $source.change(function() {
+      $source.change(function () {
         sourceDirty = true;
       });
     });
