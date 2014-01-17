@@ -30,36 +30,45 @@ var DefaultExtensions = {
   sin: Math.sin,
   sqrt: Math.sqrt,
   tan: Math.tan,
-  
+
   // Other Math Extensions ****************************************************
-  
+
   avg: function avg(value) {
-    if ( !isArray(value) ) {
+    if (!isArray(value)) {
       return typeof value === 'number' ? value : NaN;
     }
-    if ( value.length === 0 ) return 0;
-    for ( var i = 0, r = 0, l = value.length; i < l; r += value[i++] );
+    if (value.length === 0) return 0;
+    for (var i = 0, r = 0, l = value.length; i < l; r += value[i++]);
     return r / l;
   },
 
   count: function count(value) {
-    return isArray(value) ? value.length : 0;
+    if (isArray(value)) {
+      result = value.length;
+    } else if (value.result) {
+      var result = {};
+      value.groups.forEach(function (d) {
+        result[Object.keys(d)[0]] = d[Object.keys(d)];
+        result["count"] = value.result.length;
+      });
+    } else result = 0;
+    return result;
   },
 
   max: function max(value) {
-    if ( !isArray(value) ) {
+    if (!isArray(value)) {
       return typeof value === 'number' ? value : NaN;
     }
     return Math.max.apply(Math, value);
   },
 
   median: function median(value) {
-    if ( !isArray(value) ) {
+    if (!isArray(value)) {
       return typeof value === 'number' ? value : NaN;
     }
-    if ( value.length === 0 ) return 0;
+    if (value.length === 0) return 0;
     var temp = value.slice(0).order();
-    if ( temp.length % 2 === 0 ) {
+    if (temp.length % 2 === 0) {
       var mid = temp.length / 2;
       return (temp[mid - 1] + temp[mid]) / 2;
     }
@@ -67,7 +76,7 @@ var DefaultExtensions = {
   },
 
   min: function min(value) {
-    if ( !isArray(value) ) {
+    if (!isArray(value)) {
       return typeof value === 'number' ? value : NaN;
     }
     return Math.min.apply(Math, value);
@@ -76,32 +85,34 @@ var DefaultExtensions = {
   number: Number,
 
   sum: function sum(value) {
-    if ( !isArray(value) ) {
+    if (value.result) {
+      value = value.result.map(function (d) { return d[objectKeys(d)[0]] });
+    } else if (!isArray(value)) {
       return typeof value === 'number' ? value : NaN;
     }
-    for ( var i = 0, res = 0, l = value.length; i < l; res += value[i++] );
+    for (var i = 0, res = 0, l = value.length; i < l; res += value[i++]);
     return res;
-},
+  },
 
   // Array Extensions *********************************************************
 
   first: function first(value) {
-    if ( !isArray(value) ) {
+    if (!isArray(value)) {
       return value;
     }
     return value[0];
   },
 
   last: function last(value) {
-    if ( !isArray(value) ) {
+    if (!isArray(value)) {
       return value;
     }
-    if ( value.length ) return value[value.length - 1];
+    if (value.length) return value[value.length - 1];
     return null;
   },
 
   empty: function empty(value) {
-    if ( !isArray(value) ) {
+    if (!isArray(value)) {
       return value == null;
     }
     return value.length > 0;
@@ -119,7 +130,7 @@ var DefaultExtensions = {
   },
 
   join: function join(value, delim) {
-    if ( Array.isArray(value) ) {
+    if (Array.isArray(value)) {
       return value.join(delim || '')
     }
     return value;
@@ -128,7 +139,7 @@ var DefaultExtensions = {
   string: String,
 
   title: function title(value) {
-    if ( typeof value !== 'string' ) return value;
+    if (typeof value !== 'string') return value;
     return value.replace(/\w\S*/g, function (word) {
       return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
     });
