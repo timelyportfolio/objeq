@@ -47,7 +47,6 @@ function createJunqiEnvironment(languages, autoRegister) {
   junqi.createJunqiEnvironment = createJunqiEnvironment;
   junqi.registerExtension = registerExtension;
   junqi.registerExtensions = registerExtensions;
-  junqi.getExtension = getExtension;
 
   // Register the supported language functions
   var supportedLanguages = defaultLanguages;
