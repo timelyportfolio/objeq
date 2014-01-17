@@ -71,8 +71,7 @@
     recoverable: (boolean: TRUE when the parser has a error recovery rule available for this particular error)
   }
 */
-if ( !this.$objeq ) this.$objeq = {};
-this.$objeq.parser = (function () {
+objeqParser = (function () {
 var parser = {trace: function trace() { },
 yy: {},
 symbols_: {"error":2,"query":3,"steps":4,"EOF":5,"leading_step":6,"trailing_step":7,"non_filter_step":8,"leading_filter":9,"THEN":10,"trailing_filter":11,"WHERE":12,"expr":13,"sorter":14,"grouper":15,"selector":16,"aggregator":17,"+":18,"-":19,"*":20,"/":21,"%":22,"AND":23,"OR":24,"EQ":25,"NEQ":26,"RE":27,"GT":28,"GTE":29,"LT":30,"LTE":31,"IN":32,"AS":33,"PARAM":34,"NOT":35,"(":36,")":37,"ternary":38,"func":39,"path":40,"literal":41,"?":42,":":43,"IDENT":44,"expr_list":45,"THIS":46,"ARGREF":47,".":48,"[":49,"]":50,"NUMBER":51,"STRING":52,"TRUE":53,"FALSE":54,"NULL":55,"UNDEFINED":56,"array":57,"obj":58,"subquery":59,"trailing_steps":60,",":61,"{":62,"obj_items":63,"}":64,"obj_item":65,"obj_key_literal":66,"EXPAND":67,"SELECT":68,"EXTEND":69,"ORDER_BY":70,"order_list":71,"order_spec":72,"ASC":73,"DESC":74,"GROUP_BY":75,"AGGREGATE":76,"aggr_list":77,"$accept":0,"$end":1},

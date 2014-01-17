@@ -15,7 +15,7 @@
   // Feature Checking *********************************************************
 
   var ObjeqParser = null;
-
+  /*
   function createParser() {
     if ( ObjeqParser ) {
       return new ObjeqParser();
@@ -37,6 +37,7 @@
 
     return new ObjeqParser();
   }
+  */
 
   // we control usage, so these shims don't have to be proper
 
@@ -1110,10 +1111,10 @@
     // Get a Parser from the pool, if possible
     var parser = parserPool.pop() || createParser();
     var paths = [];
-    parser.yy = { node: yynode, path: yypath, paths: paths, step: 0 };
+    //parser.yy = { node: yynode, path: yypath, paths: paths, step: 0 };
 
     // Parse the Query, include paths and evaluators in the result
-    var steps = parser.parse(queryString)
+    var steps = parser.parse("objeq",queryString)
       , result = [];
 
     for ( var i = 0, ilen = steps.length; i < ilen; i++ ) {

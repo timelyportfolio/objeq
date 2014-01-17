@@ -64,7 +64,8 @@ function createParser(env) {
     }
 
     try {
-      mod = require('./' + language + '-parser');
+      //mod = require('./' + language + '-parser');
+      mod = objeqParser;
     }
     catch ( err ) {
       throw new Error("Language '" + language + "' not supported");
@@ -82,20 +83,20 @@ function createParser(env) {
       ParserClass = parserClasses[language] = loadLanguageParser(language);
     }
     var parser = new ParserClass();
-    parser.yy = util.extendObject({}, parserInterface);
+    parser.yy = extendObject({}, parserInterface);
     return parser;
   }
   
   // Parse Tree Node Creation *************************************************
   
   function createNode() {
-    var result = util.makeArray(arguments);
+    var result = makeArray(arguments);
     result.isNode = true;
     return result;
   }
 
   function createSteps() {
-    var result = ['steps', util.makeArray(arguments)];
+    var result = ['steps', makeArray(arguments)];
     result.isNode = true;
     return result;
   }
@@ -106,19 +107,19 @@ function createParser(env) {
   }
   
   function createStep() {
-    var result = util.makeArray(arguments);
+    var result = makeArray(arguments);
     result.isStep = true;
     return result;
   }
   
   function createLocalPath() {
-    var result = ['local', [null].concat(util.makeArray(arguments))];
+    var result = ['local', [null].concat(makeArray(arguments))];
     result.isNode = true;
     return result;
   }
 
   function createParamPath() {
-    var result = ['param', util.makeArray(arguments)];
+    var result = ['param', makeArray(arguments)];
     result.isNode = true;
     return result;
   }
@@ -137,7 +138,7 @@ function createParser(env) {
   }
 
   function createList() {
-    return util.makeArray(arguments);
+    return makeArray(arguments);
   }
 
   function listPush(list, item) {
