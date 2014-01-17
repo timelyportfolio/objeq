@@ -10,6 +10,7 @@
   <script type="text/javascript" src="../objeq/junqi.js"></script>
   <!--<script type="text/javascript" src="../objeq.min.js"></script>-->
   <!--<script type="text/javascript" src="extensions.js"></script>-->
+  <script type="text/javascript" src="../objeq/index_junqi_extensions.js"></script>
   <script type="text/javascript" src="beautify.js"></script>
   <script type="text/javascript" src="jquery.min.js"></script>
   <script type="text/javascript">
@@ -18,7 +19,9 @@
 
     var $query, $queries, $source, $result, $run, $inputItems, $outputItems;
 
-    var $objeq = createJunqiEnvironment().objeq;
+    var junqi = createJunqiEnvironment()
+    var $objeq = junqi.objeq;
+    junqi.registerExtensions(DefaultExtensions)
 
     function beautifySource() {
       $source.val(js_beautify($source.val(), {

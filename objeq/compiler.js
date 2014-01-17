@@ -18,7 +18,7 @@ var slice = Array.prototype.slice
 var GROUP_KEY = '__junqi_group_key__'
   , nextGroupKey = 0;
 
-function createCompiler(){ //(env) {
+function createCompiler(env) {
   "use strict";
 
   var Steps = Object.freeze({
@@ -61,7 +61,7 @@ function createCompiler(){ //(env) {
     tern:     createTernEvaluator
   });
 
-  //var getExtension = env.getExtension;
+  var getExtension = env.getExtension;
   
   return Object.freeze({
     compile: compile
