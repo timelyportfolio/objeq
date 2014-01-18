@@ -43,6 +43,7 @@ var DefaultExtensions = {
   },
 
   count: function count(value) {
+    //group age -> {age,age} := count
     if (isArray(value)) {
       result = value.length;
     } else if (value.result) {
@@ -86,11 +87,25 @@ var DefaultExtensions = {
 
   sum: function sum(value) {
     if (value.result) {
-      value = value.result.map(function (d) { return d[objectKeys(d)[0]] });
+      calcvalue = value.result.map(function (d) {
+        return d[objectKeys(d)[0]]
+      });
     } else if (!isArray(value)) {
-      return typeof value === 'number' ? value : NaN;
+      calcvalue = [typeof value === 'number' ? value : NaN];
+    } else {
+      calcvalue = value;
     }
-    for (var i = 0, res = 0, l = value.length; i < l; res += value[i++]);
+    for (var i = 0, res = 0, l = calcvalue.length; i < l; res += calcvalue[i++]);
+
+    if (value.result) {
+      var result = {};
+      value.groups.forEach(function (d) {
+        result[Object.keys(d)[0]] = d[Object.keys(d)];
+        result["sum"] = res;
+      });
+      res = result;
+    }
+
     return res;
   },
 

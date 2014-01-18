@@ -389,7 +389,7 @@ function createCompiler(env) {
     return aggregateStep;
 
     function aggregateStep(data, ctx) {
-      var result = createObjectArray(data,null);
+      var result = createObjectArray(data);
 
       for ( var i = 0; i < alen; i++ ) {
         result = extensions[i].call(data, result);
