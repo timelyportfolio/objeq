@@ -1,3 +1,14 @@
+/*!
+ * junqi (JavaScript Querying for Node.js)
+ * Licensed under the MIT License
+ * see doc/LICENSE.md
+ *
+ * @author Thom Bradford (github/kode4food)
+ */
+
+// Imports
+var util = require('./util');
+
 var slice = Array.prototype.slice
   , isArray = Array.isArray
   , defineProperties = Object.defineProperty
@@ -891,6 +902,5 @@ function createCompiler(env) {
   }
 }
 
-
 // Exports
-//exports.createCompiler = createCompiler;
+exports.createCompiler = createCompiler;
